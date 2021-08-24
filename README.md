@@ -31,7 +31,7 @@ if res != None and res.status_code == 200:
 
 If we execute the code above, it will be executed on the Driver.  If I were to create a loop with multiple of API requests, there would be no parallelism, no scaling, leaving a huge dependency on the Driver.  This approach criples Apache Spark and leaves it no better than a single threaded Python program.  To take advantage of Apache Spark's scaling and distribution, an alternative solution must be sought.
 
-The solution is to use a UDF coupled to a withColumn statement.  This example, demonstrates how one can create a DataFrame whereby each row represents a single request to the REST service.  A UDF (User Defined Function) is used to encapsulate the HTTP request, returning a structured column that represents the REST API response, which can then be sliced and diced using the likes of explode and other built-in DataFrame functions (Or collapsed, see [https://github.com/jamesshocking/collapse-spark-dataframe]().
+The solution is to use a UDF coupled to a withColumn statement.  This example, demonstrates how one can create a DataFrame whereby each row represents a single request to the REST service.  A UDF (User Defined Function) is used to encapsulate the HTTP request, returning a structured column that represents the REST API response, which can then be sliced and diced using the likes of explode and other built-in DataFrame functions (Or collapsed, see [https://github.com/jamesshocking/collapse-spark-dataframe](https://github.com/jamesshocking/collapse-spark-dataframe)).
 
 ## The Solution
 
@@ -39,7 +39,7 @@ For the sake of brevity I am assuming that a SparkSession has been created and a
 
 The solution assumes that you need to consume data from a REST API, which you will be calling multiple times to get the data that you need.  In order to take advantage of the parallelism that Apache Spark offers, each REST API call will be encapsulated by a UDF, which is bound to a DataFrame.  Each row in the DataFrame will represent a single call to the REST API service.  Once an action is executed on the DataFrame, the result from each individual REST API call will be appended to each row as a Structured data type.
 
-To demonstrate the mechanism, I will be using a free US Government REST API service that returns the makes and models of USA vehicles [https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json]().
+To demonstrate the mechanism, I will be using a free US Government REST API service that returns the makes and models of USA vehicles [https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json](https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json).
 
 ### Start by declaring your imports:
 
@@ -146,7 +146,7 @@ As Spark is lazy, the UDF will execute once an action like count() or show() is 
 | ------------- |-------------| -----|-----|-----|
 | get      | https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json | {'content-type': "application/json"} | {} | [9773, Response r...] |
 
-The REST service results a number of attributes and we're only interested in the one identified as Results (i.e. result.Results).  If we use my collapse_columns function ([https://github.com/jamesshocking/collapse-spark-dataframe]()):
+The REST service results a number of attributes and we're only interested in the one identified as Results (i.e. result.Results).  If we use my collapse_columns function ([https://github.com/jamesshocking/collapse-spark-dataframe](https://github.com/jamesshocking/collapse-spark-dataframe)):
 
 ```python
 df = request_df.select(explode(col("result.Results")).alias("results"))
