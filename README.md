@@ -1,4 +1,4 @@
-# How to execute a REST API on Apache Spark the Right Way - Python
+# How to execute a REST API call on Apache Spark the Right Way - Python
 
 ## Introduction
 
