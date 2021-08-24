@@ -23,7 +23,7 @@ def executeRestApi(verb, url, headers, body):
     elif verb == "post":
       res = requests.post(url, data=body, headers=headers)
     else:
-      print("todo")
+      print("another HTTP verb action")
   except Exception as e:
     return e
 
