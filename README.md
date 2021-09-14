@@ -146,7 +146,7 @@ As Spark is lazy, the UDF will execute once an action like count() or show() is 
 | ------------- |-------------| -----|-----|-----|
 | get      | https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json | {'content-type': "application/json"} | {} | [9773, Response r...] |
 
-The REST service results a number of attributes and we're only interested in the one identified as Results (i.e. result.Results).  If we use my collapse_columns function ([https://github.com/jamesshocking/collapse-spark-dataframe](https://github.com/jamesshocking/collapse-spark-dataframe)):
+The REST service returns a number of attributes and we're only interested in the one identified as Results (i.e. result.Results).  If we use my collapse_columns function ([https://github.com/jamesshocking/collapse-spark-dataframe](https://github.com/jamesshocking/collapse-spark-dataframe)):
 
 ```python
 df = request_df.select(explode(col("result.Results")).alias("results"))
