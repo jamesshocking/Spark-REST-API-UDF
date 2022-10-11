@@ -1,3 +1,12 @@
+#################################################################################################################
+#
+#  Oct 2022 - Since originally writing this demo, the example URL https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json
+#             is terminating all requests.  The end result is that it will appear as if the code isn't work.  The problem
+#             is that when the Python Requests library executes the request, the remote server terminates the request
+#             and an exception is thrown.
+#
+#             The code is still valid, but I recommend trying with a different endpoint
+#
 from pyspark.sql import SparkSession
 import requests
 import json
